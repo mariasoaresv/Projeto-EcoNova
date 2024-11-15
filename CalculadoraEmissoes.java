@@ -10,9 +10,9 @@ public class Calculadora {
         //Introdução:
         System.out.println("Calculo das emissões de carbono mensais da empresa: ");
         System.out.println("Por favor, insira os dados coletados no mês:");
-        System.out.printf("Gostaria de calcular todas as categorias de emissão? Responda com sim ou não:");
+        System.out.printf("Gostaria de calcular todas as categorias de emissão? Responda com sim ou não:"); //Essa parte ainda está incompleta
 
-        String calcularTudo = scanner.nextLine();
+        String calcularTudo = scanner.nextLine(); //Essa parte ainda está incompleta
 
         //1- Veículos
         System.out.println("\nDigite quantos veículos possuem na frota da empresa: ");
