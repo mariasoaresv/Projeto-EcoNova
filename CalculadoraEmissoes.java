@@ -7,102 +7,63 @@ public class Calculadora {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        //Introdução:
-        System.out.println("Calculo das emissões de carbono mensais da empresa: ");
+        // Introdução
+        System.out.println("Cálculo das emissões de carbono mensais da empresa:");
         System.out.println("Por favor, insira os dados coletados no mês:");
 
-        //1- Veículos
-        System.out.println("\nDigite quantos veículos possuem na frota da empresa: ");
-        int quantVeiculos = scanner.nextInt();
-        scanner.nextLine(); // Consumir a quebra de linha
+        // 1- Veículos
+        System.out.println("\nDigite o total de combustível utilizado pelos veículos no mês:");
+        System.out.println(" - Gasolina (em litros):");
+        double gasolina = scanner.nextDouble();
 
-        double emissaoVTotal = 0; // Emissão total inicial da frota
+        System.out.println(" - Álcool (em litros):");
+        double alcool = scanner.nextDouble();
 
-        // Loop que executa dependendo do número de veículos inseridos pelo usuário
-        for (int i = 1; i <= quantVeiculos; i++) {
-            System.out.println("\nVeículo " + i + ": ");
+        System.out.println(" - Diesel (em litros):");
+        double diesel = scanner.nextDouble();
 
-            System.out.println("\nDigite a distância percorrida pelo veículo (em km): ");
-            double kmRodados = scanner.nextDouble();
+        System.out.println(" - Consumo de veículos elétricos (em kWh):");
+        double eletrico = scanner.nextDouble();
 
-            scanner.nextLine(); // Consumir a quebra de linha
-            System.out.println("\nDigite o tipo de combustível (gasolina, álcool, diesel, gás ou elétrico):");
-            String tipoCombustivel = scanner.nextLine().toLowerCase();
+        // Fatores de emissão para veículos
+        double emissaoVGasolina = gasolina * 2.31;
+        double emissaoVAlcool = alcool * 1.86;
+        double emissaoVDiesel = diesel * 2.68;
+        double emissaoVEletrico = eletrico * 0.5;
 
-            System.out.println("\nDigite o consumo médio do veículo (em km/L, ou, no caso de veículos elétricos em kWh):");
-            double consumo = scanner.nextDouble();
+        double emissaoVTotal = emissaoVGasolina + emissaoVAlcool + emissaoVDiesel + emissaoVEletrico;
 
-            double emissaoCombustivel;
-            switch (tipoCombustivel) {
-                case "gasolina":
-                    emissaoCombustivel = 2.31;
-                    break;
-                case "alcool":
-                    emissaoCombustivel = 1.86;
-                    break;
-                case "diesel":
-                    emissaoCombustivel = 2.68;
-                    break;
-                case "gas":
-                    emissaoCombustivel = 2.75;
-                    break;
-                case "eletrico":
-                    emissaoCombustivel = 0.5;
-                    break;
-                default:
-                    emissaoCombustivel = 0;
-                    System.out.println("Combustível inválido. Emissão não calculada para este veículo.");
-                    continue; // Pular para o próximo veículo
-            }
-
-            //Calcula a emissão de cada veículo e adiciona ao total
-            double veiculo = (kmRodados / consumo) * emissaoCombustivel;
-            emissaoVTotal += veiculo;
-        }
-
-        //2- Eletricidade
-        System.out.println("\nDigite o consumo de eletricidade TOTAL da empresa (em kWh): ");
+        // 2- Eletricidade
+        System.out.println("\nDigite o consumo de eletricidade total da empresa (em kWh):");
         double consumoEletrico = scanner.nextDouble();
+        double eletricidade = consumoEletrico * 0.5;
 
-        double emissaoEletricidade = 0.5;
-
-        double eletricidade = consumoEletrico * emissaoEletricidade;
-
-        //3- Gás natural
-        System.out.println("\nDigite o consumo de gás natural (em m³): ");
+        // 3- Gás natural
+        System.out.println("\nDigite o consumo de gás natural total da empresa (em m³):");
         double consumoGas = scanner.nextDouble();
+        double gas = consumoGas * 2.0;
 
-        double emissaoGas = 2.0;
-
-        double gas = consumoGas * emissaoGas;
-
-        //4- Resíduos (lixo)
-        System.out.println("\nDigite a quantidade de resíduos gerados (em kg): ");
+        // 4- Resíduos (lixo)
+        System.out.println("\nDigite a quantidade total de resíduos gerados (em kg):");
         double kgResiduos = scanner.nextDouble();
+        double residuo = kgResiduos * 1.2;
 
-        double emissaoResiduo = 1.2;
-
-        double residuo = kgResiduos * emissaoResiduo;
-
-        //5- Uso de papel
-        System.out.println("\nDigite a quantidade de papel consumida (em kg): ");
+        // 5- Uso de papel
+        System.out.println("\nDigite a quantidade total de papel consumida (em kg):");
         double kgPapel = scanner.nextDouble();
+        double papel = kgPapel * 1.5;
 
-        double emissaoPapel = 1.5;
-
-        double papel = kgPapel * emissaoPapel;
-
-        //Calcula a emissão total da empresa
+        // Cálculo da emissão total
         double emissaoTotal = emissaoVTotal + eletricidade + gas + residuo + papel;
 
-        //Obtém o mês atual e traduz para português
+        // Obtém o mês atual e traduz para português
         LocalDate dataAtual = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM").withLocale(new java.util.Locale("pt", "BR"));
         String mesAtual = dataAtual.format(formatter);
 
+        // Exibe o resultado
         System.out.printf("\nA emissão de carbono total da empresa no mês de %s é: %.2f kg de CO2\n", mesAtual, emissaoTotal);
 
         scanner.close();
     }
 }
-
